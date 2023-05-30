@@ -177,15 +177,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(5),
-              child: ListView.builder(
-                itemCount: listCount.length,
-                itemBuilder: (context, index) {
-                  return ListView(
+              child: ListView(
                     scrollDirection: Axis.vertical,
                     children: theRestOfTheProduct,
                   );
-                },
-              ),
             ))
           ],
         ),
