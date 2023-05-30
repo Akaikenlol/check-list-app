@@ -1,5 +1,6 @@
 import 'package:check_list_app/components/list_card.dart';
 import 'package:check_list_app/components/recent_list_card.dart';
+import 'package:check_list_app/utils/constant.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -17,33 +18,36 @@ class _HistoryScreenState extends State<HistoryScreen> {
           'https://i.pinimg.com/564x/ba/5b/68/ba5b689b0226afd422e2f14c6a4e7d09.jpg',
       'name': 'Keyboard',
       'shopName': 'TechnoLand',
-      'price': 69.99
+      'price': '69.99'
     },
     {
       'imgURL':
           'https://i.pinimg.com/564x/62/fb/6c/62fb6c43ca711925d31c2b9242a4b883.jpg',
       'name': 'MousePad',
       'shopName': 'Technoland',
-      'price': 42.9
+      'price': '42.9'
     },
     {
       'imgURL':
           'https://i.pinimg.com/564x/4c/c9/97/4cc997edb2e0a9ed581e1d5fbcd3aa18.jpg',
       'name': 'Cola',
       'shopName': 'G&G',
-      'price': 1.9
+      'price': '1.9'
     },
     {
       'imgURL':
           'https://i.pinimg.com/564x/ad/d4/fa/add4fa9d9c4d5021bd2f9323d6470d8b.jpg',
       'name': 'Cloth',
       'shopName': 'B&B',
-      'price': 59.9
+      'price': '59.9'
     }
   ];
 
+  final _product = supabase.from('Product').select();
+
   @override
   Widget build(BuildContext context) {
+    print(_product);
     return Scaffold(
       // backgroundColor: Colors.grey[100],
       body: Padding(
@@ -106,16 +110,64 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             Container(
               height: 170,
-              child: ListView.builder(
-                itemCount: 4,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return ShopCard(
-                    imgURL: listCount[index]['imgURL'],
-                    shopName: listCount[index]['shopName'],
-                    price: listCount[index]['price'],
-                    name: listCount[index]['name'],
-                  );
+              child: FutureBuilder(
+                future: _product,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final product = snapshot.data!;
+                  List<Widget> firstFourProduct = [];
+                  List<Widget> theRestOfTheProduct = [];
+                  if (product.length > 4) {
+                    for (int i = 0; i < 4; i++) {
+                      firstFourProduct.add(
+                        ShopCard(
+                          imgURL:
+                              'https://i.pinimg.com/736x/83/bf/5b/83bf5b1a398fd61853748b7aa48657ab.jpg',
+                          shopName: product[i]['shop_name'],
+                          price: product[i]['price'],
+                          name: product[i]['name'],
+                        ),
+                      );
+                    }
+                    for (int i = 4; i < product.length; i++) {
+                      theRestOfTheProduct.add(
+                        RecentCard(
+                          imgURL:
+                              'https://i.pinimg.com/736x/83/bf/5b/83bf5b1a398fd61853748b7aa48657ab.jpg',
+                          shopName: product[i]['shop_name'],
+                          price: product[i]['price'],
+                          name: product[i]['name'],
+                        ),
+                      );
+                    }
+                  }
+                  return product.length < 1
+                      ? Center(
+                          child: Container(
+                            child: Text(
+                              "You Currently Don't Have Product",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        )
+                      : ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: firstFourProduct,
+                        );
+                  //  ListView.builder(
+                  //     itemCount: product.length,
+                  //     scrollDirection: Axis.horizontal,
+                  //     itemBuilder: (context, index) {
+                  //       return;
+                  //     },
+                  //   );
                 },
               ),
             ),
@@ -128,11 +180,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               child: ListView.builder(
                 itemCount: listCount.length,
                 itemBuilder: (context, index) {
-                  return RecentCard(
-                    imgURL: listCount[index]['imgURL'],
-                    shopName: listCount[index]['shopName'],
-                    price: listCount[index]['price'],
-                    name: listCount[index]['name'],
+                  return ListView(
+                    scrollDirection: Axis.vertical,
+                    children: theRestOfTheProduct,
                   );
                 },
               ),
