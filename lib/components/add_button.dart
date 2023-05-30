@@ -1,4 +1,5 @@
 import 'package:check_list_app/components/styles.dart';
+import 'package:check_list_app/main.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_rect_tween.dart';
@@ -46,6 +47,16 @@ class _AddTodoPopupCard extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _shopNameController = TextEditingController();
+
+  void _addProduct(BuildContext context) async {
+    await supabase.from("Product").insert({
+      "name": _nameController.text,
+      "price": _priceController.text,
+      "shop_name": _shopNameController.text,
+      "updated_at": DateTime.now().toLocal().toString()
+    });
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +124,7 @@ class _AddTodoPopupCard extends StatelessWidget {
                         color: AppColors.accentColor,
                       ),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => _addProduct(context),
                         child: const Text(
                           'Add',
                           style: TextStyle(

@@ -123,20 +123,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
               height: 20,
             ),
             Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(5),
-              child: ListView.builder(
-                itemCount: listCount.length,
-                itemBuilder: (context, index) {
-                  return RecentCard(
-                    imgURL: listCount[index]['imgURL'],
-                    shopName: listCount[index]['shopName'],
-                    price: listCount[index]['price'],
-                    name: listCount[index]['name'],
-                  );
-                },
+              child: Padding(
+                padding: const EdgeInsets.all(5),
+                child: ListView.builder(
+                  itemCount: listCount.length,
+                  itemBuilder: (context, index) {
+                    return RecentCard(
+                      imgURL: listCount[index]['imgURL'],
+                      shopName: listCount[index]['shopName'],
+                      price: listCount[index]['price'],
+                      name: listCount[index]['name'],
+                    );
+                  },
+                ),
               ),
-            ))
+            )
           ],
         ),
       ),

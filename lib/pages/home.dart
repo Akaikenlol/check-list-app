@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
         elevation: 0,
         title: const Text(
           'C H E C K',
