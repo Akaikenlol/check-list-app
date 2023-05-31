@@ -1,6 +1,6 @@
 import 'package:check_list_app/components/styles.dart';
 import 'package:check_list_app/main.dart';
-import 'package:check_list_app/utils/constant.dart';
+import 'package:check_list_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

@@ -1,13 +1,24 @@
+// import 'dart:js';
+import 'package:check_list_app/components/avatar.dart';
 import 'package:check_list_app/components/styles.dart';
-import 'package:check_list_app/utils/constant.dart';
 import 'package:flutter/material.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'custom_rect_tween.dart';
 import 'hero_dialog_route.dart';
+import 'package:check_list_app/utils/constants.dart';
+// class AddButton extends StatelessWidget {
+//   const AddButton({Key? key}) : super(key: key);
 
-class AddButton extends StatelessWidget {
-  const AddButton({Key? key}) : super(key: key);
+// }
 
+class AddButton extends StatefulWidget {
+  const AddButton({super.key});
+
+  @override
+  State<AddButton> createState() => _AddButtonState();
+}
+
+class _AddButtonState extends State<AddButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,7 +26,7 @@ class AddButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-            return _AddTodoPopupCard();
+            return AddToDoPopUpCard();
           }));
         },
         child: Hero(
@@ -42,11 +53,44 @@ class AddButton extends StatelessWidget {
 
 const String _heroAddTodo = 'add-todo-hero';
 
-class _AddTodoPopupCard extends StatelessWidget {
-  _AddTodoPopupCard({Key? key}) : super(key: key);
+// class _AddTodoPopupCard extends StatelessWidget {
+//   _AddTodoPopupCard({Key? key}) : super(key: key);
+
+// }
+
+class AddToDoPopUpCard extends StatefulWidget {
+  const AddToDoPopUpCard({super.key});
+
+  @override
+  State<AddToDoPopUpCard> createState() => _AddToDoPopUpCardState();
+}
+
+class _AddToDoPopUpCardState extends State<AddToDoPopUpCard> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _shopNameController = TextEditingController();
+  String? avatarURL;
+  var _loading = false;
+  Future<void> onUpload(String imageURL) async {
+    try {
+      await supabase.from('Product').upsert(
+        {'product_image': imageURL},
+      );
+      if (mounted) {
+        context.showSnackBar(message: 'Updated your profile image!');
+      }
+    } on PostgrestException catch (error) {
+      context.showErrorSnackBar(message: error.message);
+    } catch (error) {
+      context.showErrorSnackBar(message: 'Unexpected error has occurred');
+    }
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      avatarURL = imageURL;
+    });
+  }
 
   void _addProduct(BuildContext context) async {
     await supabase.from('Product').insert(
@@ -81,6 +125,7 @@ class _AddTodoPopupCard extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Avatar(imageUrl: avatarURL, onUpload: onUpload),
                     TextField(
                       controller: _nameController,
                       decoration: InputDecoration(
