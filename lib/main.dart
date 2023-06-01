@@ -4,10 +4,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   await Supabase.initialize(
-      url: 'https://ylgrzrxgiaaqqmhvfjqs.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlsZ3J6cnhnaWFhcXFtaHZmanFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0NjM4NjksImV4cCI6MjAwMTAzOTg2OX0.HgorD03E-5tbc5j6aPQHUQtUpPFnCj5uwTVTSlGEnt8');
-  runApp(const MyApp());
+    url: 'https://umzjzbsyajxgsipodtyr.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtemp6YnN5YWp4Z3NpcG9kdHlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0MjA2MTIsImV4cCI6MjAwMDk5NjYxMn0.VXXDabmrTAu4c4l1ni9WTfdDpTRqOWrfEfJ_BN6cq0o',
+  );
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

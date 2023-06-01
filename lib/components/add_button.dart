@@ -1,6 +1,7 @@
 // import 'dart:js';
 import 'package:check_list_app/components/avatar.dart';
 import 'package:check_list_app/components/styles.dart';
+import 'package:check_list_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'custom_rect_tween.dart';

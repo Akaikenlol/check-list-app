@@ -1,6 +1,5 @@
 import 'package:check_list_app/components/styles.dart';
 import 'package:check_list_app/main.dart';
-import 'package:check_list_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -120,30 +119,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   }
                   final product = snapshot.data!;
-                  return product.length < 1
-                      ? Center(
-                          child: Container(
-                            child: Text(
-                              "You Currently Don't Have Product",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: product.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: EdgeInsets.only(top: 20, bottom: 20),
-                              child: ProductCard(
-                                product: product,
-                                index: index,
-                              ),
-                            );
-                          },
-                        );
+
+                  return ListView.builder(
+                    itemCount: product.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        child: ProductCard(
+                          product: product,
+                          index: index,
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             ),
