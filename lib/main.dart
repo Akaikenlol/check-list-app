@@ -12,9 +12,6 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-// Get a reference your Supabase client
-final supabase = Supabase.instance.client;
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

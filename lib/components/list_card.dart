@@ -14,7 +14,7 @@ class ShopCard extends StatelessWidget {
 
   final String name;
   final String shopName;
-  final double price;
+  final String price;
   final String imgURL;
 
   // ShopCard({required this.name, required this.price, required this.shopName});

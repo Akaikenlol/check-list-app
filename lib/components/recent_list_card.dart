@@ -10,7 +10,7 @@ class RecentCard extends StatelessWidget {
 
   final String name;
   final String shopName;
-  final double price;
+  final String price;
   final String imgURL;
 
   @override
@@ -69,7 +69,7 @@ class RecentCard extends StatelessWidget {
                 padding: EdgeInsets.all(5),
                 color: Colors.blueGrey[100],
                 child: Text(
-                  '\$ ' + price.toString(),
+                  '\$ ' + price,
                 ),
               ),
             ),
